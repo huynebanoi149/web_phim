@@ -74,13 +74,13 @@ export default function ManageCategories() {
       <div className="mb-4 flex gap-2">
         <input
           className="border p-2"
-          placeholder="ID (TMDB)"
+          placeholder="ID "
           value={newId}
           onChange={(e) => setNewId(e.target.value)}
         />
         <input
           className="border p-2"
-          placeholder="Tên danh mục"
+          placeholder="Tên thể loại"
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
         />

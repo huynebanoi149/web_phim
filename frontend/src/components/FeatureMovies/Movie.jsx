@@ -3,9 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useFetch from "../../hooks/useFetch";
 import { useModalContext } from "../../context/ModalProvider";
 import { Link, useNavigate } from "react-router-dom"; // thêm useNavigate
+import { useAuth } from "../../context/AuthContext";
 
 const Movie = ({ data: movie }) => {
   if (!movie) return null;
+
+  const { user } = useAuth();
 
   const { backdrop_path, title, release_date, overview, _id } = movie;
   const { setIsShowing, setContent } = useModalContext();
@@ -55,12 +58,20 @@ const Movie = ({ data: movie }) => {
         {/* Nút Play + Chi tiết */}
         <div className="flex gap-4">
           <button
-            onClick={() => navigate(`/watch/${_id}`)} // dùng _id thay vì id
+            onClick={() => {
+              if (!user) {
+                alert("Bạn cần đăng nhập để xem phim!");
+                navigate("/login"); // chuyển hướng tới login
+                return;
+              }
+              navigate(`/watch/${_id}`);
+            }}
             className="rounded-full bg-[#E50914] px-[2vw] py-[0.5vw] text-white 
-              hover:bg-black hover:text-[#E50914] transition duration-300"
+    hover:bg-black hover:text-[#E50914] transition duration-300"
           >
             <FontAwesomeIcon icon={faPlay} /> Xem Phim
           </button>
+
           <Link
             to={`/movies/${_id}`}
             className="inline-block px-5 py-2 rounded-full bg-gray-600 hover:bg-gray-700 transition"

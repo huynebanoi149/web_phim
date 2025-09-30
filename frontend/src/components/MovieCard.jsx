@@ -1,24 +1,33 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CircularProgressBar from "./MediaList/CircularProgressBar";
 import ImageComponent from "./Image";
 import { useFavorites } from "../context/FavoriteContext";
+import { useAuth } from "../context/AuthContext";
 
 const MovieCard = ({ data, mediaType = "" }) => {
   const { favorites, toggleFavorite } = useFavorites();
   const { poster_path, vote_average, original_language, _id } = data;
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const type = data.media_type || mediaType;
   const cardName = type === "movie" ? data.title : data.name;
   const releaseDate = type === "movie" ? data.release_date : data.first_air_date;
- const movieId = _id || data.id;
-const isFavorite = favorites.some(f => Number(f._id || f.id) === Number(movieId));
+  const movieId = _id || data.id;
+  const isFavorite = favorites.some(
+    (f) => Number(f._id || f.id) === Number(movieId)
+  );
 
-const handleFavorite = (e) => {
-  e.preventDefault();
-  toggleFavorite({ ...data, _id: movieId }); 
-};
-
+  const handleFavorite = (e) => {
+    e.preventDefault();
+    if (!user) {
+      alert("Bạn cần đăng nhập để thêm vào yêu thích!");
+      navigate("/login");
+      return;
+    }
+    toggleFavorite({ ...data, _id: movieId });
+  };
 
   return (
     <Link to={`/${type}/${_id}`} className="rounded-lg border border-slate-800 relative">

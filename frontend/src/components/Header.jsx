@@ -28,14 +28,14 @@ const Header = () => {
 
   return (
     <div>
-      <header className="fixed top-0 z-10 flex h-14 w-screen items-center bg-black px-10 text-xs font-light text-white sm:text-base">
+      <header className="fixed top-0 z-50 flex h-14 w-screen items-center bg-black px-10 text-xs font-light text-white sm:text-base">
         {/* Logo + menu trái */}
         <div className="flex items-center gap-3">
           <Link to={"/"}>
             <img src="/header-logo.png" alt="" className="w-16 sm:w-28" />
           </Link>
           <Link to={"/search?media_type=movie"}>Loc Phim</Link>
-          <Link to={"/search?media_type=tv"}>Chanels</Link>
+          {/* <Link to={"/search?media_type=tv"}>Chanels</Link> */}
         </div>
 
         {/* Search + login bên phải */}

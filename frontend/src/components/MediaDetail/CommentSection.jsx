@@ -6,11 +6,15 @@ import {
   deleteComment,
   toggleLike,
 } from "../../libs/api";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function CommentSection({ movieId }) {
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const { user, token } = useAuth();
+  const navigate = useNavigate();
 
   const fetchComments = async () => {
     try {
@@ -28,33 +32,54 @@ export default function CommentSection({ movieId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!content.trim()) return;
+
+    // 🔒 bắt buộc đăng nhập
+    if (!user || !token) {
+      alert("Bạn cần đăng nhập để bình luận!");
+      navigate("/login");
+      return;
+    }
+
     setLoading(true);
     try {
-      await createComment(movieId, { content });
+      await createComment(movieId, { content }, token);
       setContent("");
       fetchComments();
     } catch (err) {
       console.error(err);
+      alert("Không thể gửi bình luận!");
     }
     setLoading(false);
   };
 
   const handleDelete = async (id) => {
+    if (!user || !token) {
+      alert("Bạn cần đăng nhập để xoá bình luận!");
+      navigate("/login");
+      return;
+    }
     if (!window.confirm("Bạn có chắc muốn xoá bình luận này?")) return;
     try {
-      await deleteComment(id);
+      await deleteComment(id, token);
       fetchComments();
     } catch (err) {
       console.error(err);
+      alert("Không thể xoá bình luận!");
     }
   };
 
   const handleLike = async (id) => {
+    if (!user || !token) {
+      alert("Bạn cần đăng nhập để thích bình luận!");
+      navigate("/login");
+      return;
+    }
     try {
-      await toggleLike(id);
+      await toggleLike(id, token);
       fetchComments();
     } catch (err) {
       console.error(err);
+      alert("Không thể like bình luận!");
     }
   };
 
@@ -93,10 +118,10 @@ export default function CommentSection({ movieId }) {
               <button onClick={() => handleLike(c._id)}>
                 👍 {c.likes?.length || 0}
               </button>
-              <button onClick={() => handleDelete(c._id)}>🗑️ Xoá</button>
+              {user && c.userId?._id === user._id && (
+                <button onClick={() => handleDelete(c._id)}>🗑️ Xoá</button>
+              )}
             </div>
-
-            {/* Reply hiển thị ở đây (nếu bạn muốn nested replies sau này) */}
           </div>
         ))}
       </div>
