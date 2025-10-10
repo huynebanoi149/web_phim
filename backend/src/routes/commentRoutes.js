@@ -15,6 +15,7 @@ import { verifyToken, verifyAdmin } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 // ----------------- ADMIN ----------------- //
+
 // Admin xóa bất kỳ comment nào
 router.delete("/admin/:id", verifyToken, verifyAdmin, deleteAnyComment);
 
@@ -25,6 +26,7 @@ router.put("/admin/:id", verifyToken, verifyAdmin, editAnyComment);
 router.get("/", verifyToken, verifyAdmin, getAllComments);
 
 // ----------------- USER ----------------- //
+
 // Lấy comment theo movieId
 router.get("/:movieId", getComments);
 

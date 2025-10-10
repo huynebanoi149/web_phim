@@ -11,7 +11,6 @@ const SearchForm = ({ setSearchFormValue }) => {
   const typeViaParam = searchParams.get("media_type");
 
 
-  //const validMediaType = "movie"; // luôn luôn movie
 
   const { control, watch } = useForm({
     defaultValues: {

@@ -12,17 +12,14 @@ const SearchPage = () => {
     rating: "all",
   });
 
- // Luôn tính min / max từ rating
 const [min, max] =
   searchFormValue.rating === "all"
     ? [0, 10]
     : searchFormValue.rating.split("-");
 
-// Xác định có chọn filter nào không
 const hasGenre = searchFormValue.genres.length > 0;
 const hasRating = searchFormValue.rating !== "all";
 
-// Nếu có filter (rating hoặc genre) thì gọi discover, nếu không thì gọi list
 const url =
   hasGenre || hasRating
     ? `${API_BASE}/movies/discover?` +

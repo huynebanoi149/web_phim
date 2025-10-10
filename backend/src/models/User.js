@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Định nghĩa schema cho User
 const userSchema = new mongoose.Schema({
   username: {
     type: String,

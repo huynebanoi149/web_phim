@@ -17,8 +17,7 @@ function formatCurrency(num) {
 }
 
 export default function ManageMovies() {
-  // ===== STATE =====
-  const [movies, setMovies] = useState([]); // danh sách phim
+  const [movies, setMovies] = useState([]); 
   const [form, setForm] = useState({
     title: "",
     overview: "",
@@ -32,13 +31,13 @@ export default function ManageMovies() {
     budget: 0,
     production_companies: "",
   });
-  const [editingId, setEditingId] = useState(null); // id phim đang edit
-  const [selectedOverview, setSelectedOverview] = useState(null); // popup mô tả
+  const [editingId, setEditingId] = useState(null); 
+  const [selectedOverview, setSelectedOverview] = useState(null); 
 
   // ✅ State phân trang
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const limit = 10; // số phim mỗi trang
+  const limit = 10; 
 
   // ===== LẤY DANH SÁCH PHIM =====
   const fetchMovies = async (p = 1) => {
@@ -53,10 +52,9 @@ export default function ManageMovies() {
   };
 
   useEffect(() => {
-    fetchMovies(1); // khi load lần đầu
+    fetchMovies(1); 
   }, []);
 
-  // ===== SUBMIT FORM (Thêm/Sửa) =====
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -84,11 +82,10 @@ export default function ManageMovies() {
 
     try {
       if (editingId) {
-        await updateMovie(editingId, payload); // sửa
+        await updateMovie(editingId, payload); 
       } else {
-        await createMovie(payload); // thêm mới
+        await createMovie(payload); 
       }
-      // Reset form
       setForm({
         title: "",
         overview: "",
@@ -103,7 +100,7 @@ export default function ManageMovies() {
         production_companies: "",
       });
       setEditingId(null);
-      fetchMovies(page); // refresh danh sách
+      fetchMovies(page); 
     } catch (err) {
       alert("Lỗi khi lưu phim: " + err.message);
     }
@@ -253,7 +250,7 @@ export default function ManageMovies() {
             <tr key={m._id}>
               <td className="p-2 border">{m._id}</td>
 
-              {/* ✅ Poster hiển thị URL nhập tay hoặc TMDb */}
+              {/*  Poster hiển thị URL nhập tay hoặc TMDb */}
               <td className="p-2 border">
                 {m.poster_path ? (
                   <img
@@ -270,7 +267,7 @@ export default function ManageMovies() {
                 )}
               </td>
 
-              {/* ✅ Backdrop hiển thị URL nhập tay hoặc TMDb */}
+              {/*  Backdrop hiển thị URL nhập tay hoặc TMDb */}
               <td className="p-2 border">
                 {m.backdrop_path ? (
                   <img

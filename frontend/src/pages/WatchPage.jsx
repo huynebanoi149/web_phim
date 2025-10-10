@@ -27,7 +27,7 @@ function getEmbedUrl(url) {
     return `https://player.vimeo.com/video/${videoId}`;
   }
 
-  return null; // không nhận diện được
+  return null; 
 }
 
 export default function WatchPage() {

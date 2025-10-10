@@ -14,7 +14,6 @@ export const addFavorite = async (req, res) => {
   try {
     const movieId = Number(req.params.movieId);
 
-    // check movie tồn tại
     const movie = await Movie.findById(movieId);
     if (!movie) return res.status(404).json({ message: "Movie not found" });
 
@@ -32,6 +31,7 @@ export const addFavorite = async (req, res) => {
   }
 };
 
+// Xoá phim khỏi danh sách yêu thích
 export const removeFavorite = async (req, res) => {
   try {
     const movieId = Number(req.params.movieId);

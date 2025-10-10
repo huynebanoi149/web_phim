@@ -13,8 +13,6 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL;
 const MediaPage = () => {
   const { id, type } = useParams();
 
-  // movie: /movies/:id?append=release_dates,credits,videos
-  // tv:    /tv/:id?append=credits,videos,seasons
   const path = type === "tv" ? `/tv/${id}` : `/movies/${id}`;
 
 
@@ -30,7 +28,7 @@ const MediaPage = () => {
       </div>
       {type === "tv" && <SeasonList seasons={currentMovie.seasons || []} />}
       <RelatedMovie id={id} type={type} />
-          {/* Bình luận để cuối cùng */}
+          {}
     <div className="mt-10 max-w-screen-xl mx-auto p-6 text-white">
       <CommentSection movieId={id} />
     </div>

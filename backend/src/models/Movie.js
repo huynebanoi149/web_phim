@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
-import Counter from "./Counter.js"; // file counter.model.js
+import Counter from "./Counter.js";
 
+// Định nghĩa schema cho Movie
 const movieSchema = new mongoose.Schema(
   {
-    _id: { type: Number },  // TMDb id hoặc auto-increment id
+    _id: { type: Number },  // Sử dụng id từ TMDb hoặc auto-increment nếu không có
     imdb_id: String,
     media_type: { type: String, enum: ["movie", "tv"], default: "movie" },
 
@@ -42,7 +43,6 @@ const movieSchema = new mongoose.Schema(
     revenue: { type: Number, default: 0 },
     budget: { type: Number, default: 0 },
 
-    // Phục vụ quản trị
     created_by_admin: { type: Boolean, default: false },
     is_featured: { type: Boolean, default: false },
     tags: [String],
@@ -52,13 +52,11 @@ const movieSchema = new mongoose.Schema(
   { timestamps: true, versionKey: false }
 );
 
-// expose "id"
 movieSchema.virtual("id").get(function () {
   return this._id;
 });
 movieSchema.set("toJSON", { virtuals: true });
 
-// middleware auto-increment nếu không có TMDb id
 movieSchema.pre("save", async function (next) {
   if (this.isNew && !this._id) {
     try {
@@ -73,7 +71,6 @@ movieSchema.pre("save", async function (next) {
     }
   }
 
-  // 🔹 Auto-normalize các field còn thiếu
   if (!this.original_title) this.original_title = this.title || this.name;
   if (!this.original_name && this.name) this.original_name = this.name;
 

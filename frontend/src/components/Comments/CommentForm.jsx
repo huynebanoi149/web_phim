@@ -12,7 +12,7 @@ export default function CommentForm({ movieId, parentId = null, onSuccess }) {
     e.preventDefault();
     if (!content.trim()) return;
 
-    // 🔒 Kiểm tra đăng nhập
+    //  Kiểm tra đăng nhập
     if (!user || !token) {
       alert("Bạn cần đăng nhập để bình luận!");
       navigate("/login");

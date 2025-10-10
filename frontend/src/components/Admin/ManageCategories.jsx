@@ -5,11 +5,10 @@ export default function ManageCategories() {
   const [newName, setNewName] = useState("");
   const [newId, setNewId] = useState("");
 
-  // ✅ Lấy base url từ .env (vd: VITE_API_BASE_URL=http://localhost:5001/api)
   const API_BASE = `${import.meta.env.VITE_API_BASE_URL}`;
 
 
-  // 👉 Lấy danh sách từ API
+  //  Lấy danh sách từ API
   useEffect(() => {
     fetch(`${API_BASE}/genres`)
       .then((res) => {
@@ -20,7 +19,7 @@ export default function ManageCategories() {
       .catch((err) => console.error("Fetch genres error:", err));
   }, [API_BASE]);
 
-  // 👉 Thêm mới
+  //  Thêm mới
   const addGenre = async () => {
     if (!newName || !newId) return;
     const res = await fetch(`${API_BASE}/genres`, {
@@ -38,7 +37,7 @@ export default function ManageCategories() {
     setNewId("");
   };
 
-  // 👉 Sửa tên
+  //  Sửa tên
   const updateGenre = async (mongoId, name) => {
     const editedName = prompt("Tên mới:", name);
     if (!editedName) return;
@@ -55,7 +54,7 @@ export default function ManageCategories() {
     setGenres(genres.map(g => g._id === updated._id ? updated : g));
   };
 
-  // 👉 Xóa
+  //  Xóa
   const deleteGenre = async (mongoId) => {
     if (!window.confirm("Bạn có chắc muốn xóa?")) return;
     const res = await fetch(`${API_BASE}/genres/${mongoId}`, { method: "DELETE" });

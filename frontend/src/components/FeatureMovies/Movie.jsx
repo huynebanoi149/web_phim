@@ -2,7 +2,7 @@ import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useFetch from "../../hooks/useFetch";
 import { useModalContext } from "../../context/ModalProvider";
-import { Link, useNavigate } from "react-router-dom"; // thêm useNavigate
+import { Link, useNavigate } from "react-router-dom"; 
 import { useAuth } from "../../context/AuthContext";
 
 const Movie = ({ data: movie }) => {
@@ -12,7 +12,7 @@ const Movie = ({ data: movie }) => {
 
   const { backdrop_path, title, release_date, overview, _id } = movie;
   const { setIsShowing, setContent } = useModalContext();
-  const navigate = useNavigate(); // khởi tạo navigate
+  const navigate = useNavigate(); 
 
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
@@ -61,7 +61,7 @@ const Movie = ({ data: movie }) => {
             onClick={() => {
               if (!user) {
                 alert("Bạn cần đăng nhập để xem phim!");
-                navigate("/login"); // chuyển hướng tới login
+                navigate("/login"); 
                 return;
               }
               navigate(`/watch/${_id}`);

@@ -5,7 +5,6 @@ import axios from 'axios';
 import mongoose from 'mongoose';
 import Movie from '../models/Movie.js';
 
-// hàm sleep để chờ giữa các request, tránh quá tải TMDb
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 async function run() {
@@ -14,7 +13,6 @@ async function run() {
 
   const key = process.env.TMDB_API_KEY;
 
-  // ví dụ: import top ~60 phim phổ biến (3 trang)
   const ids = [];
   for (let page = 1; page <= 3; page++) {
     const { data } = await axios.get('https://api.themoviedb.org/3/discover/movie', {
@@ -24,21 +22,17 @@ async function run() {
     await sleep(300);
   }
 
-  // fetch chi tiết từng id, kèm videos và upsert
   for (const id of ids) {
-    // 1. Lấy thông tin chi tiết phim
     const { data: movieData } = await axios.get(
       `https://api.themoviedb.org/3/movie/${id}`,
       { params: { api_key: key, language: 'vi-VN' } }
     );
 
-    // 2. Lấy danh sách trailer / videos
     const { data: videoData } = await axios.get(
       `https://api.themoviedb.org/3/movie/${id}/videos`,
       { params: { api_key: key, language: 'vi-VN' } }
     );
 
-    // 3. Upsert vào MongoDB, gộp videos
     await Movie.findByIdAndUpdate(
       movieData.id,
       {

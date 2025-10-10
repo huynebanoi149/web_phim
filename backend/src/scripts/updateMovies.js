@@ -9,7 +9,6 @@ const API_KEY = process.env.TMDB_API_KEY;
 
 async function updateMovieExtras(movieId) {
   try {
-    // 👉 Lấy chi tiết phim (homepage, imdb_id, ...)
     const detailRes = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}`,
       { params: { api_key: API_KEY, language: "vi-VN" } }
@@ -17,7 +16,6 @@ async function updateMovieExtras(movieId) {
 
     const { homepage, imdb_id } = detailRes.data;
 
-    // 👉 Lấy trailer
     const videoRes = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}/videos`,
       { params: { api_key: API_KEY, language: "vi-VN" } }
@@ -32,7 +30,6 @@ async function updateMovieExtras(movieId) {
         type: v.type,
       }));
 
-    // 👉 Update vào MongoDB
     await Movie.updateOne(
       { _id: movieId },
       {
@@ -53,7 +50,6 @@ async function updateMovieExtras(movieId) {
 async function run() {
   await connectDB();
 
-  // 👉 Lấy toàn bộ phim trong DB
   const movies = await Movie.find({});
   console.log(`🎬 Tìm thấy ${movies.length} phim, bắt đầu cập nhật...`);
 

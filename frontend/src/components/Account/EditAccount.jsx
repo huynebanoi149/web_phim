@@ -20,7 +20,7 @@ export default function EditAccount({ setTab, user, setUser }) {
     if (!res.ok) throw new Error("Cập nhật thất bại");
 
     const data = await res.json();
-    setUser(data.user); // cập nhật state React từ DB
+    setUser(data.user); 
     setTab("info");
   } catch (err) {
     console.error(err.message);

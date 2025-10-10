@@ -65,7 +65,7 @@ const handleSave = async (id) => {
     });
 
     if (res.ok) {
-      const updated = await res.json(); // trả về object comment
+      const updated = await res.json(); 
       setComments((prev) =>
         prev.map((c) => (c._id === id ? updated : c))
       );
@@ -79,8 +79,6 @@ const handleSave = async (id) => {
     console.error("Lỗi khi sửa bình luận:", error);
   }
 };
-
-
   // Bắt đầu sửa
   const handleEdit = (comment) => {
     setEditingId(comment._id);

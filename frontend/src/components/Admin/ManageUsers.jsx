@@ -4,8 +4,8 @@ export default function ManageUsers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [editingId, setEditingId] = useState(null);     // id đang sửa
-  const [editData, setEditData] = useState({});         // dữ liệu tạm thời
+  const [editingId, setEditingId] = useState(null);    
+  const [editData, setEditData] = useState({});         
 
   // Lấy danh sách user
   useEffect(() => {

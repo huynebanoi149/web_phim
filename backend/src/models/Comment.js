@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Định nghĩa schema cho Comment
 const commentSchema = new mongoose.Schema(
   {
     movieId: { type: Number, ref: "Movie", required: true }, // vì Movie._id là Number

@@ -7,7 +7,6 @@ export const getComments = async (req, res) => {
       .populate("userId", "username email")
       .lean();
 
-    // Tổ chức replies thành cây
     const map = {};
     comments.forEach(c => { map[c._id] = { ...c, replies: [] }; });
     const roots = [];
@@ -84,7 +83,7 @@ export const deleteComment = async (req, res) => {
     }
 
     await comment.deleteOne();
-    res.json({ _id: req.params.id }); // trả về id vừa xoá
+    res.json({ _id: req.params.id });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -98,9 +97,9 @@ export const toggleLike = async (req, res) => {
 
     const userId = req.user.id;
     if (comment.likes.includes(userId)) {
-      comment.likes.pull(userId); // unlike
+      comment.likes.pull(userId);
     } else {
-      comment.likes.push(userId); // like
+      comment.likes.push(userId);
     }
 
     await comment.save();
@@ -129,7 +128,7 @@ export const deleteAnyComment = async (req, res) => {
     if (!comment) return res.status(404).json({ error: "Comment không tồn tại" });
 
     await comment.deleteOne();
-    res.json({ _id: req.params.id }); // trả về id để frontend remove
+    res.json({ _id: req.params.id });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

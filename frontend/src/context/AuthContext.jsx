@@ -7,7 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Load lại state từ localStorage khi app mở
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
     const savedUser = localStorage.getItem("user");
@@ -17,7 +16,6 @@ export const AuthProvider = ({ children }) => {
 
     setLoading(false);
 
-    // Sync giữa các tab
     const handleStorageChange = () => {
       const updatedToken = localStorage.getItem("token");
       const updatedUser = localStorage.getItem("user");

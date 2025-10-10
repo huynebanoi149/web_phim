@@ -5,7 +5,6 @@ import { useWatch } from "react-hook-form";
 const GenreInput = ({ control, onChange, value = [] }) => {
   const mediaType = useWatch({ name: "mediaType", control });
 
-  // ✅ Gọi API backend thay vì TMDb
   const [isLoading, data] = useFetch(
     { url: "http://localhost:5001/api/genres" },
     true
@@ -15,7 +14,6 @@ const GenreInput = ({ control, onChange, value = [] }) => {
     onChange([]);
   }, [mediaType]);
 
-  // ✅ Luôn check dữ liệu trước khi map
   const genres = data?.genres || [];
 
   return (

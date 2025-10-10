@@ -17,7 +17,6 @@ export default function useFetch(
 
     setIsLoading(true);
 
-    // nếu url không bắt đầu bằng http -> ghép với backend base url
     const fullUrl = url.startsWith("http")
       ? url
       : `${import.meta.env.VITE_API_BASE_URL}${url}`;

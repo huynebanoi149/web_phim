@@ -10,7 +10,7 @@ export const getGenres = async (req, res) => {
   }
 };
 
-// Thêm genre mới (để trang admin dùng sau này)
+// Thêm genre mới 
 export const createGenre = async (req, res) => {
   try {
     const genre = new Genre(req.body);

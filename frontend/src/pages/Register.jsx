@@ -22,15 +22,14 @@ export default function Register() {
       return setError("Mật khẩu phải có ít nhất 6 ký tự.");
     if (password !== confirmPassword)
       return setError("Mật khẩu xác nhận không khớp.");
-    if (!gender) return setError("Vui lòng chọn giới tính."); // ✅ kiểm tra gender
-
+    if (!gender) return setError("Vui lòng chọn giới tính."); 
     try {
       setLoading(true);
 
       const res = await fetch("http://localhost:5001/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password, gender }), // ✅ gửi kèm gender
+        body: JSON.stringify({ username, email, password, gender }), 
       });
 
       const data = await res.json();

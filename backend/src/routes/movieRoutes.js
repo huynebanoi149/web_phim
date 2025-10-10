@@ -19,10 +19,6 @@ router.get('/:id/videos', ctrl.videos);
 router.get('/:id/recommendations', ctrl.getRecommendations);
 router.get('/:id', ctrl.getOne);
 
-
-
-
-
 // ===== Admin routes =====
 router.post('/', verifyToken, requireAdmin, ctrl.create);
 router.put('/:id', verifyToken, requireAdmin, ctrl.update);

@@ -16,7 +16,7 @@ export default function AccountLayout() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // lấy token từ login
+            Authorization: `Bearer ${localStorage.getItem("token")}`, 
           },
         });
 

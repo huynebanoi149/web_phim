@@ -12,4 +12,3 @@ const CardList = ({ data, mediaType }) => {
 };
 
 export default CardList;
-// {(data|| []).map(card => <MovieCard/>)}

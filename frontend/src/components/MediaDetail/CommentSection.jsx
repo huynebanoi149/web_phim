@@ -33,7 +33,7 @@ export default function CommentSection({ movieId }) {
     e.preventDefault();
     if (!content.trim()) return;
 
-    // 🔒 bắt buộc đăng nhập
+    //  bắt buộc đăng nhập
     if (!user || !token) {
       alert("Bạn cần đăng nhập để bình luận!");
       navigate("/login");

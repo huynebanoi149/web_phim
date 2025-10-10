@@ -2,10 +2,7 @@ import axios from 'axios';
 import Movie from '../models/Movie.js';
 
 
-/**
- * Lấy danh sách phim với phân trang, tìm kiếm, sắp xếp
- * ?page=&limit=&q=&sort=
- */
+// Lấy danh sách phim với phân trang, tìm kiếm, sắp xếp
 export const list = async (req, res) => {
   const page = parseInt(req.query.page || '1', 10);
   const limit = parseInt(req.query.limit || '20', 10);
@@ -31,33 +28,30 @@ export const getOne = async (req, res) => {
   res.json(doc);
 };
 
-/** Tạo phim mới (admin) */
+// Tạo mới phim (admin)
 export const create = async (req, res) => {
   const body = { ...req.body };
-  if (body.id && !body._id) body._id = body.id; // cho phép gửi "id" như TMDb
+  if (body.id && !body._id) body._id = body.id;
   body.created_by_admin = true;
   const doc = await Movie.create(body);
   res.status(201).json(doc);
 };
 
-/** Cập nhật phim (admin) */
+// Cập nhật phim (admin)
 export const update = async (req, res) => {
   const doc = await Movie.findByIdAndUpdate(req.params.id, req.body, { new: true });
   if (!doc) return res.status(404).json({ message: 'Not found' });
   res.json(doc);
 };
 
-/** Xoá phim (admin) */
+// Xoá phim (admin)
 export const remove = async (req, res) => {
   const r = await Movie.findByIdAndDelete(req.params.id);
   if (!r) return res.status(404).json({ message: 'Not found' });
   res.json({ ok: true });
 };
 
-/**
- * Import 1 phim từ TMDb theo id (admin)
- * Lưu _id = id của TMDb để đồng nhất
- */
+// Import phim từ TMDb qua id
 export const importFromTmdb = async (req, res) => {
   const id = req.params.tmdbId;
   const key = process.env.TMDB_API_KEY;
@@ -76,27 +70,24 @@ export const importFromTmdb = async (req, res) => {
   }
 };
 
-/** Lấy phim gợi ý/ liên quan */
+// Lấy danh sách phim đề xuất (giả lập)
 export const getRecommendations = async (req, res) => {
   const { id } = req.params;
-  const { type } = req.query; // movie hoặc tv
-  const rec = await Movie.find({ relatedTo: id, type }); // tuỳ logic của bạn
+  const { type } = req.query;
+  const rec = await Movie.find({ relatedTo: id, type });
   res.json({ results: rec });
 };
 
 /** ===== Các endpoint BỔ SUNG ===== */
 
-/** Phim phổ biến (sort theo popularity) */
+// Lấy danh sách phim phổ biến
 export const popular = async (req, res) => {
   const limit = parseInt(req.query.limit || '20', 10);
   const results = await Movie.find().sort('-popularity').limit(limit).lean();
   res.json({ results });
 };
 
-/**
- * Proxy lấy videos (trailer) từ TMDb theo id
- * Nếu đã lưu sẵn vào DB có thể thay bằng dữ liệu local
- */
+// Lấy trailer, video theo movieId
 export const videos = async (req, res) => {
   try {
     const id = Number(req.params.id);
@@ -107,7 +98,6 @@ export const videos = async (req, res) => {
     const movie = await Movie.findById(id).lean();
     if (!movie) return res.status(404).json({ message: 'Movie not found' });
 
-    // Trả về trailer đã seed
     res.json({ id: movie._id, results: movie.videos || [] });
   } catch (e) {
     res.status(400).json({ message: 'Cannot fetch videos', error: e.message });
@@ -116,7 +106,7 @@ export const videos = async (req, res) => {
 
 
 
-/** Lọc phim theo rating & genre */
+// Khám phá phim với bộ lọc nâng cao
 export const discover = async (req, res) => {
   const page = parseInt(req.query.page || '1', 10);
   const limit = parseInt(req.query.limit || '20', 10);
@@ -130,7 +120,6 @@ export const discover = async (req, res) => {
   };
 
   if (req.query.genre) {
-    // genre có thể là "28,12", tách và ép kiểu
     const genreIds = req.query.genre.split(',').map(g => Number(g));
     filter['genres.id'] = { $in: genreIds };
   }
@@ -144,7 +133,7 @@ export const discover = async (req, res) => {
 };
 
 
-
+// Tìm kiếm phim
 export const search = async (req, res) => {
   const q = req.query.q?.trim();
   const page = parseInt(req.query.page || '1', 10);

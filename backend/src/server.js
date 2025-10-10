@@ -4,10 +4,10 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import { verifyToken } from "./middleware/authMiddleware.js";
 import cors from "cors";
-import movieRoutes from './routes/movieRoutes.js';   // <-- import default
-import genreRoutes from "./routes/genreRoutes.js"; // <-- import default
-import favoriteRoutes from './routes/favoriteRoutes.js'; // <-- import default
-import commentRoutes from './routes/commentRoutes.js'; // <-- import default
+import movieRoutes from './routes/movieRoutes.js';  
+import genreRoutes from "./routes/genreRoutes.js";
+import favoriteRoutes from './routes/favoriteRoutes.js';
+import commentRoutes from './routes/commentRoutes.js';
 
 dotenv.config();
 

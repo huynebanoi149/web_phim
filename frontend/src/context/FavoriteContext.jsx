@@ -1,4 +1,3 @@
-// src/context/FavoriteContext.jsx
 import { createContext, useContext, useState, useEffect } from "react";
 import { addFavorite, removeFavorite, getFavorites } from "../libs/api";
 import { useAuth } from "./AuthContext";
@@ -6,10 +5,9 @@ import { useAuth } from "./AuthContext";
 const FavoriteContext = createContext();
 
 export const FavoriteProvider = ({ children }) => {
-  const { token } = useAuth(); // 👈 lấy token từ AuthContext
+  const { token } = useAuth(); 
   const [favorites, setFavorites] = useState([]);
 
-  // Load danh sách favorites mỗi khi token thay đổi
   useEffect(() => {
     if (token) {
       getFavorites()
@@ -24,9 +22,9 @@ export const FavoriteProvider = ({ children }) => {
         })
         .catch(() => setFavorites([]));
     } else {
-      setFavorites([]); // khi logout thì clear luôn
+      setFavorites([]); 
     }
-  }, [token]); // 👈 chạy lại mỗi khi token đổi (login/logout)
+  }, [token]); 
 
   const toggleFavorite = async (movie) => {
     const movieId = Number(movie._id || movie.id);
@@ -40,7 +38,6 @@ export const FavoriteProvider = ({ children }) => {
       } else {
         await addFavorite(movieId);
       }
-      // Sau khi thêm / xóa, fetch lại danh sách mới
       const updated = await getFavorites();
       setFavorites(Array.isArray(updated) ? updated : updated.favorites || []);
     } catch (err) {

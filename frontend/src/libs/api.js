@@ -1,4 +1,3 @@
-// src/libs/api.js
 const BASE = import.meta.env.VITE_API_BASE_URL;
 
 export async function api(path, options = {}) {

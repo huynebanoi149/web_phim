@@ -5,7 +5,6 @@ import useFetch from "../../hooks/useFetch";
 const MediaList = ({ title, types }) => {
   const [mediaType, setMediaType] = useState(types[0].id);
 
-  // Lấy URL tương ứng từ props types
   const url = types.find((type) => type.id === mediaType).APIurl;
 
   // Gọi API backend
