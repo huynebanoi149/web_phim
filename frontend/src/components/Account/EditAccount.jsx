@@ -73,6 +73,7 @@ export default function EditAccount({ setTab, user, setUser }) {
             type="button"
             onClick={() => setTab("info")}
             className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
+            
           >
             Hủy
           </button>
